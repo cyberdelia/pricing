@@ -1,0 +1,34 @@
+# === Weekly package ===
+# 
+# We use the 'weekly' package when a weekly price exists and duration is greater than a week.
+week_package
+    use packages(weekly, $delta)
+    when
+        packages.package('weekly')
+        check $delta.days >= 7
+
+
+# === Daily package ===
+#
+# We use the 'daily' package when a daily price exists an duration is lower than a week,
+# and greater than a day.
+# 
+day_package
+    use packages(daily, $delta)
+    when
+        packages.package('daily')
+        check $delta.days >= 1
+        check $delta.days < 7
+
+# === Daily package for week ===
+#
+# We use the 'daily' package when a daily price exists and duration is greater than a week,
+# only if no weekly price exists.
+#
+day_package_for_week
+    use packages(daily, $delta)
+    when
+        packages.package('daily')
+        check $delta.days >= 7
+        notany
+            packages.package('weekly')
