@@ -1,6 +1,7 @@
 # === Weekly package ===
 # 
 # We use the 'weekly' package when a weekly price exists and duration is greater than a week.
+#
 week_package
     use packages(weekly, $delta)
     when
