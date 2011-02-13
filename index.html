@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>pricing.krb</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>pricing.krb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-0'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-0">#</a>
+        </div>
+        <h3><span id="weekly-package" href="weekly-package"> Weekly package </span></h3>
+<p>We use the 'weekly' package when a weekly price exists and duration is greater than a week.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre><span class="n">week_package</span>
+    <span class="k">use</span> <span class="n">packages</span><span class="p">(</span><span class="n">weekly</span><span class="p">,</span> <span class="nv">$delta</span><span class="p">)</span>
+    <span class="n">when</span>
+        <span class="n">packages</span><span class="o">.</span><span class="nb">package</span><span class="p">(</span><span class="s">&#39;weekly&#39;</span><span class="p">)</span>
+        <span class="n">check</span> <span class="nv">$delta</span><span class="o">.</span><span class="n">days</span> <span class="o">&gt;=</span> <span class="mi">7</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-1'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-1">#</a>
+        </div>
+        <h3><span id="daily-package" href="daily-package"> Daily package </span></h3>
+<p>We use the 'daily' package when a daily price exists an duration is lower than a week,
+and greater than a day.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre><span class="n">day_package</span>
+    <span class="k">use</span> <span class="n">packages</span><span class="p">(</span><span class="n">daily</span><span class="p">,</span> <span class="nv">$delta</span><span class="p">)</span>
+    <span class="n">when</span>
+        <span class="n">packages</span><span class="o">.</span><span class="nb">package</span><span class="p">(</span><span class="s">&#39;daily&#39;</span><span class="p">)</span>
+        <span class="n">check</span> <span class="nv">$delta</span><span class="o">.</span><span class="n">days</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+        <span class="n">check</span> <span class="nv">$delta</span><span class="o">.</span><span class="n">days</span> <span class="o">&lt;</span> <span class="mi">7</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-2'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-2">#</a>
+        </div>
+        <h3><span id="daily-package-for-week" href="daily-package-for-week"> Daily package for week </span></h3>
+<p>We use the 'daily' package when a daily price exists and duration is greater than a week,
+only if no weekly price exists.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre><span class="n">day_package_for_week</span>
+    <span class="k">use</span> <span class="n">packages</span><span class="p">(</span><span class="n">daily</span><span class="p">,</span> <span class="nv">$delta</span><span class="p">)</span>
+    <span class="n">when</span>
+        <span class="n">packages</span><span class="o">.</span><span class="nb">package</span><span class="p">(</span><span class="s">&#39;daily&#39;</span><span class="p">)</span>
+        <span class="n">check</span> <span class="nv">$delta</span><span class="o">.</span><span class="n">days</span> <span class="o">&gt;=</span> <span class="mi">7</span>
+        <span class="n">notany</span>
+            <span class="n">packages</span><span class="o">.</span><span class="nb">package</span><span class="p">(</span><span class="s">&#39;weekly&#39;</span><span class="p">)</span>
+
+</pre></div></pre></div>
+      </td>
+    </tr>
+  </table>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>knowledge.py</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-0'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-0">#</a>
+        </div>
+        
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-1'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-1">#</a>
+        </div>
+        <p>We are importing pyke knowledge engine</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyke</span> <span class="kn">import</span> <span class="n">knowledge_engine</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-2'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-2">#</a>
+        </div>
+        <h3><span id="finding-out-which-package-apply-for-the-duration" href="finding-out-which-package-apply-for-the-duration"> Finding out which package apply for the duration </span></h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-3'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-3">#</a>
+        </div>
+        <p>Given existings packages and duration, prints which package apply 
+or if no package applies.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre><span class="k">def</span> <span class="nf">which_package</span><span class="p">(</span><span class="n">packages</span><span class="p">,</span> <span class="n">duration</span><span class="p">):</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-4'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-4">#</a>
+        </div>
+        <p>We are loading Pyke rules base we have defined in pricing.krb</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre>    <span class="n">engine</span> <span class="o">=</span> <span class="n">knowledge_engine</span><span class="o">.</span><span class="n">engine</span><span class="p">((</span><span class="n">__file__</span><span class="p">,</span> <span class="s">&#39;.rules&#39;</span><span class="p">))</span>
+    <span class="n">engine</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="s">&#39;pricing&#39;</span><span class="p">)</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-5'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-5">#</a>
+        </div>
+        <p>We are creating the facts base from the package list.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre>    <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">packages</span><span class="p">:</span>
+        <span class="n">engine</span><span class="o">.</span><span class="n">assert_</span><span class="p">(</span><span class="s">&#39;packages&#39;</span><span class="p">,</span> <span class="s">&#39;package&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">package</span><span class="p">,))</span>
+        </pre></div></pre></div>
+      </td>
+    </tr><tr id='section-6'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-6">#</a>
+        </div>
+        <p>Now, we have our rules and our facts, let's just prove that a package applies.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre>    <span class="k">try</span><span class="p">:</span>
+        <span class="n">vals</span><span class="p">,</span> <span class="n">plans</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">prove_1_goal</span><span class="p">(</span><span class="s">&#39;pricing.packages($type, $delta)&#39;</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="n">duration</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">vals</span><span class="p">[</span><span class="s">&#39;type&#39;</span><span class="p">]</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-7'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-7">#</a>
+        </div>
+        <p>We cannot prove that any package applies, so, no package applies.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre>    <span class="k">except</span> <span class="n">knowledge_engine</span><span class="o">.</span><span class="n">CanNotProve</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;No package can apply&quot;</span>
+    </pre></div></pre></div>
+      </td>
+    </tr><tr id='section-8'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-8">#</a>
+        </div>
+        <p>We need to reset the engine to be able to apply a new fact base.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre>    <span class="n">engine</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-9'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-9">#</a>
+        </div>
+        <h3><span id="let's-try-with-a-few-examples" href="let's-try-with-a-few-examples"> Let's try with a few examples </span></h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-10'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-10">#</a>
+        </div>
+        <p>Defining a bunch of duration</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre><span class="n">a_day</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">a_week</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">less_than_a_week</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">more_than_a_week</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-11'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-11">#</a>
+        </div>
+        <p>This should print 'daily'</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;You should read &#39;daily&#39; :&quot;</span><span class="p">,</span>
+<span class="n">which_package</span><span class="p">([</span><span class="s">&#39;daily&#39;</span><span class="p">,</span> <span class="s">&#39;weekly&#39;</span><span class="p">],</span> <span class="n">a_day</span><span class="p">)</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-12'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-12">#</a>
+        </div>
+        <p>This should print 'weekly'</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;You should read &#39;weekly&#39; :&quot;</span><span class="p">,</span>
+<span class="n">which_package</span><span class="p">([</span><span class="s">&#39;daily&#39;</span><span class="p">,</span> <span class="s">&#39;weekly&#39;</span><span class="p">],</span> <span class="n">a_week</span><span class="p">)</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-13'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-13">#</a>
+        </div>
+        <p>This should print 'daily'</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;You should read &#39;daily&#39; :&quot;</span><span class="p">,</span>
+<span class="n">which_package</span><span class="p">([</span><span class="s">&#39;daily&#39;</span><span class="p">,</span> <span class="s">&#39;weekly&#39;</span><span class="p">],</span> <span class="n">less_than_a_week</span><span class="p">)</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-14'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-14">#</a>
+        </div>
+        <p>This should print 'weekly'</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;You should read &#39;weekly&#39; :&quot;</span><span class="p">,</span>
+<span class="n">which_package</span><span class="p">([</span><span class="s">&#39;daily&#39;</span><span class="p">,</span> <span class="s">&#39;weekly&#39;</span><span class="p">],</span> <span class="n">more_than_a_week</span><span class="p">)</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-15'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-15">#</a>
+        </div>
+        <p>This should print 'daily'</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;You should read &#39;daily&#39; :&quot;</span><span class="p">,</span>
+<span class="n">which_package</span><span class="p">([</span><span class="s">&#39;daily&#39;</span><span class="p">],</span> <span class="n">more_than_a_week</span><span class="p">)</span></pre></div></pre></div>
+      </td>
+    </tr><tr id='section-16'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-16">#</a>
+        </div>
+        <p>This should print 'No package apply'</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;You should read &#39;No package can apply&#39; :&quot;</span><span class="p">,</span>
+<span class="n">which_package</span><span class="p">([</span><span class="s">&#39;weekly&#39;</span><span class="p">],</span> <span class="n">a_day</span><span class="p">)</span>
+
+</pre></div></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
