@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 import datetime
 
-# We are importing pyke knowledge engine
+# Importing Pyke knowledge engine
 from pyke import knowledge_engine
 
 # === Finding out which package apply for the duration ===
 
-# Given existings packages and duration, prints which package apply 
+# Given existings packages and duration, prints which package applies
 # or if no package applies.
 def which_package(packages, duration):
     # We are loading Pyke rules base we have defined in pricing.krb
     engine = knowledge_engine.engine((__file__, '.rules'))
     engine.activate('pricing')
-    # We are creating the facts base from the package list.
+    # Creating the facts base from the package list.
     for package in packages:
         engine.assert_('packages', 'package', (package,))
         
@@ -20,17 +20,17 @@ def which_package(packages, duration):
     try:
         vals, plans = engine.prove_1_goal('pricing.packages($type, $delta)', delta=duration)
         print vals['type']
-    # We cannot prove that any package applies, so, no package applies.
+    # We cannot prove that any package applies therefore no package applies.
     except knowledge_engine.CanNotProve:
-        print "No package can apply"
+        print "No package applies"
     
-    # We need to reset the engine to be able to apply a new fact base.
+    # Resetting the engine is needed to be able to apply a new fact base.
     engine.reset()
 
 
 # === Let's try with a few examples ===
 
-# Defining a bunch of duration
+# Defining a bunch of durations
 a_day = datetime.timedelta(days=1)
 a_week = datetime.timedelta(days=7)
 less_than_a_week = datetime.timedelta(days=4)
@@ -56,6 +56,6 @@ which_package(['daily', 'weekly'], more_than_a_week)
 print "You should read 'daily' :",
 which_package(['daily'], more_than_a_week)
 
-# This should print 'No package apply'
+# This should print 'No package applies'
 print "You should read 'No package can apply' :",
 which_package(['weekly'], a_day)
