@@ -94,7 +94,7 @@ only if no weekly price exists.</p>
         <div class="octowrap">
           <a class="octothorpe" href="#section-1">#</a>
         </div>
-        <p>We are importing pyke knowledge engine</p>
+        <p>Importing Pyke knowledge engine</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyke</span> <span class="kn">import</span> <span class="n">knowledge_engine</span></pre></div></pre></div>
@@ -114,7 +114,7 @@ only if no weekly price exists.</p>
         <div class="octowrap">
           <a class="octothorpe" href="#section-3">#</a>
         </div>
-        <p>Given existings packages and duration, prints which package apply 
+        <p>Given existings packages and duration, prints which package applies
 or if no package applies.</p>
       </td>
       <td class=code>
@@ -136,7 +136,7 @@ or if no package applies.</p>
         <div class="octowrap">
           <a class="octothorpe" href="#section-5">#</a>
         </div>
-        <p>We are creating the facts base from the package list.</p>
+        <p>Creating the facts base from the package list.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><div class="highlight"><pre>    <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">packages</span><span class="p">:</span>
@@ -160,11 +160,11 @@ or if no package applies.</p>
         <div class="octowrap">
           <a class="octothorpe" href="#section-7">#</a>
         </div>
-        <p>We cannot prove that any package applies, so, no package applies.</p>
+        <p>We cannot prove that any package applies therefore no package applies.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><div class="highlight"><pre>    <span class="k">except</span> <span class="n">knowledge_engine</span><span class="o">.</span><span class="n">CanNotProve</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;No package can apply&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;No package applies&quot;</span>
     </pre></div></pre></div>
       </td>
     </tr><tr id='section-8'>
@@ -172,7 +172,7 @@ or if no package applies.</p>
         <div class="octowrap">
           <a class="octothorpe" href="#section-8">#</a>
         </div>
-        <p>We need to reset the engine to be able to apply a new fact base.</p>
+        <p>Resetting the engine is needed to be able to apply a new fact base.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><div class="highlight"><pre>    <span class="n">engine</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></pre></div></pre></div>
@@ -192,7 +192,7 @@ or if no package applies.</p>
         <div class="octowrap">
           <a class="octothorpe" href="#section-10">#</a>
         </div>
-        <p>Defining a bunch of duration</p>
+        <p>Defining a bunch of durations</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><div class="highlight"><pre><span class="n">a_day</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -260,7 +260,7 @@ or if no package applies.</p>
         <div class="octowrap">
           <a class="octothorpe" href="#section-16">#</a>
         </div>
-        <p>This should print 'No package apply'</p>
+        <p>This should print 'No package applies'</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;You should read &#39;No package can apply&#39; :&quot;</span><span class="p">,</span>
