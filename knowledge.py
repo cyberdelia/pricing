@@ -57,5 +57,5 @@ print "You should read 'daily' :",
 which_package(['daily'], more_than_a_week)
 
 # This should print 'No package applies'
-print "You should read 'No package can apply' :",
+print "You should read 'No package applies' :",
 which_package(['weekly'], a_day)
